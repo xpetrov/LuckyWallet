@@ -1,4 +1,5 @@
-﻿using LuckyWallet.DataAccess;
+﻿using LuckyWallet.Controllers;
+using LuckyWallet.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace LuckyWallet.Host;
@@ -8,6 +9,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("LuckyWalletDb"));
+
+        services
+            .AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddWalletOperations();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
