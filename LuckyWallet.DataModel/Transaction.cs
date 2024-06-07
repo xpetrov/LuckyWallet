@@ -6,6 +6,8 @@ public class Transaction
 {
     public Guid Id { get; set; }
 
+    public Guid UniqueTransactionId { get; set; }
+
     public Guid WalletId { get; set; }
 
     public decimal Amount { get; set; }

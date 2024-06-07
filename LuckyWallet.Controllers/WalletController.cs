@@ -18,4 +18,14 @@ public class WalletController : Controller
         var result = await operation.Execute(model, User, cancellationToken);
         return this.OperationResult(result);
     }
+
+    [HttpGet("Balance/{playerId}", Name = nameof(GetPlayerBalance))]
+    public async Task<ActionResult<decimal>> GetPlayerBalance(
+        [FromRoute] Guid playerId,
+        [FromServices] GetPlayerBalanceOperation operation,
+        CancellationToken cancellationToken)
+    {
+        var result = await operation.Execute(playerId, User, cancellationToken);
+        return this.OperationResult(result);
+    }
 }

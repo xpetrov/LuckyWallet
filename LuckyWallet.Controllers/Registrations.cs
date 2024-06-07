@@ -8,6 +8,7 @@ public static class Registrations
     public static IServiceCollection AddWalletOperations(this IServiceCollection services)
     {
         RegisterWalletOperation.Register(services);
+        GetPlayerBalanceOperation.Register(services);
 
         return services;
     }
