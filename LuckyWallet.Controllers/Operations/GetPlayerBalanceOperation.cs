@@ -21,19 +21,17 @@ public class GetPlayerBalanceOperation : OperationBase<Guid, decimal>
     protected override async Task<decimal> ExecuteCore(
         Guid input,
         ClaimsPrincipal principal,
-        CancellationToken cancellationToken)
-    {
-        var res = await _facade.GetPlayerBalance(input, cancellationToken);
-        return res;
-    }
+        CancellationToken cancellationToken) =>
+        (await _facade.GetPlayerBalance(input, cancellationToken))
+            .ThrowIfNull("Player's Wallet Not Found");
 
     public interface IGetPlayerBalanceDatabaseFacade : IRequiresContext
     {
-        Task<decimal> GetPlayerBalance(Guid playerId, CancellationToken cancellationToken) =>
+        Task<decimal?> GetPlayerBalance(Guid playerId, CancellationToken cancellationToken) =>
             DbContext.Set<Wallet>()
                 .Where(_ => _.PlayerId == playerId)
-                .Select(_ => _.Balance)
-                .SingleOrDefaultAsync(cancellationToken);
+                .Select(_ => (decimal?)_.Balance)
+                .FirstOrDefaultAsync(cancellationToken);
     }
 
     internal record GetPlayerBalanceDatabaseFacade(DatabaseContext DbContext) : IGetPlayerBalanceDatabaseFacade;

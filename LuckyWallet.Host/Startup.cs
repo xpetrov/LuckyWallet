@@ -35,11 +35,20 @@ public class Startup
 
     private static void SeedData(DatabaseContext dbContext)
     {
+        var defaultPlayers = new List<Player>()
+        {
+            new() { Id = DbDefaults.Player1_Id },
+            new() { Id = DbDefaults.Player2_Id },
+            new() { Id = DbDefaults.Player3_Id },
+            new() { Id = DbDefaults.Player4_Id }
+        };
+
         var defaultWallets = new List<Wallet>()
         {
-            new() { Id = DbDefaults.Wallet1_Id, PlayerId = DbDefaults.Player1_Id, Balance = 100 },
-            new() { Id = DbDefaults.Wallet2_Id, PlayerId = DbDefaults.Player2_Id, Balance = 50 },
-            new() { Id = DbDefaults.Wallet3_Id, PlayerId = DbDefaults.Player3_Id, Balance = 0 }
+            /*Player 1*/ new() { Id = DbDefaults.Wallet1_Id, PlayerId = DbDefaults.Player1_Id, Balance = 100 },
+            /*Player 2*/ new() { Id = DbDefaults.Wallet2_Id, PlayerId = DbDefaults.Player2_Id, Balance = 50 },
+            /*Player 3*/ new() { Id = DbDefaults.Wallet3_Id, PlayerId = DbDefaults.Player3_Id, Balance = 0 },
+            /*Player 4 has no wallet registered.*/
         };
 
         var defaultTransactions = new List<Transaction>()

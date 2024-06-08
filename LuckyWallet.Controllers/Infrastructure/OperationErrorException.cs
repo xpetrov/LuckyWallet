@@ -1,6 +1,9 @@
-﻿namespace LuckyWallet.Controllers.Infrastructure;
+﻿using System.Net;
+
+namespace LuckyWallet.Controllers.Infrastructure;
 
 [Serializable]
-public class OperationErrorException(string message) : Exception(message)
+public class OperationErrorException(HttpStatusCode statusCode, string message) : Exception(message)
 {
+    public HttpStatusCode StatusCode { get; } = statusCode;
 }

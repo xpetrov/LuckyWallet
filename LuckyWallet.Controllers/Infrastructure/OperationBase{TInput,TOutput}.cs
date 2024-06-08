@@ -16,7 +16,7 @@ public abstract class OperationBase<TInput, TOutput>
 		}
 		catch (OperationErrorException ex)
 		{
-			return OperationResult.OperationError<TOutput>(ex.Message);
+			return OperationResult.OperationError<TOutput>(ex.Message, ex.StatusCode);
 		}
 	}
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace LuckyWallet.Controllers.Infrastructure;
 
@@ -13,7 +12,7 @@ public static class ControllerExtensions
         {
             Success<T> { Value: None or null } => controller.Ok(),
             Success<T> success => controller.Ok(success.Value),
-            OperationError<T> operationError => controller.StatusCode((int)HttpStatusCode.UnprocessableEntity, operationError),
+            OperationError<T> operationError => controller.StatusCode((int)operationError.StatusCode, operationError.Message),
             _ => throw new NotSupportedException()
         };
     }
@@ -27,7 +26,7 @@ public static class ControllerExtensions
         {
             Success<TInput> { Value: None or null } => controller.Ok(),
             Success<TInput> success => controller.Ok(map(success.Value)),
-            OperationError<TInput> operationError => controller.StatusCode((int)HttpStatusCode.UnprocessableEntity, operationError),
+            OperationError<TInput> operationError => controller.StatusCode((int)operationError.StatusCode, operationError.Message),
             _ => throw new NotSupportedException()
         };
     }

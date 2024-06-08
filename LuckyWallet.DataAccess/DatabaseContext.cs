@@ -5,6 +5,7 @@ namespace LuckyWallet.DataAccess;
 
 public class DatabaseContext : DbContext
 {
+    public DbSet<Player> Players { get; set; }
     public DbSet<Wallet> Wallets { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
 
@@ -16,9 +17,19 @@ public class DatabaseContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Wallet>().Property(_ => _.Balance).HasPrecision(18, 2);
+        modelBuilder.Entity<Player>()
+            .HasOne(p => p.Wallet)
+            .WithOne(w => w.Player)
+            .HasForeignKey<Wallet>(w => w.PlayerId)
+            .IsRequired();
 
-        modelBuilder.Entity<Transaction>().HasOne(_ => _.Wallet).WithMany(_ => _.Transactions).HasForeignKey(_ => _.WalletId);
-        modelBuilder.Entity<Transaction>().Property(_ => _.Amount).HasPrecision(18, 2);
+        //modelBuilder.Entity<Wallet>().Property(_ => _.Balance).HasPrecision(18, 2);
+
+        modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.Wallet)
+            .WithMany(w => w.Transactions)
+            .HasForeignKey(t => t.WalletId)
+            .IsRequired();
+        //modelBuilder.Entity<Transaction>().Property(_ => _.Amount).HasPrecision(18, 2);
     }
 }

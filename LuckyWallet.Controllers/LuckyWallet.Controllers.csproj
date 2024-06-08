@@ -15,4 +15,8 @@
     <ProjectReference Include="..\LuckyWallet.DataModel\LuckyWallet.DataModel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
