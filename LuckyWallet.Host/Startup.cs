@@ -10,7 +10,10 @@ public class Startup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<DatabaseContext>(options => options.UseInMemoryDatabase("LuckyWalletDb"));
+        services.AddDbContext<DatabaseContext>(options =>
+        {
+            options.UseInMemoryDatabase("LuckyWalletDb");
+        });
 
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
@@ -23,6 +26,8 @@ public class Startup
     {
         var scope = app.ApplicationServices.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.EnsureCreated();
         SeedData(dbContext);
 
         app.UseRouting();
@@ -42,6 +47,8 @@ public class Startup
             new() { Id = DbDefaults.Player3_Id },
             new() { Id = DbDefaults.Player4_Id }
         };
+        dbContext.Players.AddRange(defaultPlayers);
+        dbContext.SaveChanges();
 
         var defaultWallets = new List<Wallet>()
         {
@@ -50,6 +57,8 @@ public class Startup
             /*Player 3*/ new() { Id = DbDefaults.Wallet3_Id, PlayerId = DbDefaults.Player3_Id, Balance = 0 },
             /*Player 4 has no wallet registered.*/
         };
+        dbContext.Wallets.AddRange(defaultWallets);
+        dbContext.SaveChanges();
 
         var defaultTransactions = new List<Transaction>()
         {
@@ -59,8 +68,6 @@ public class Startup
 
             new() { Id = DbDefaults.Wallet2_Transaction1_Id, UniqueTransactionId = Guid.NewGuid(), WalletId = DbDefaults.Wallet2_Id, Amount = 50, Type = TransactionType.Deposit }
         };
-
-        dbContext.Wallets.AddRange(defaultWallets);
         dbContext.Transactions.AddRange(defaultTransactions);
         dbContext.SaveChanges();
     }

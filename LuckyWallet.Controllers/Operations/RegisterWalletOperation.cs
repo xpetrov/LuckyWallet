@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Security.Claims;
-using System.Threading;
 
 namespace LuckyWallet.Controllers.Operations;
 
@@ -47,7 +46,7 @@ public class RegisterWalletOperation : OperationBase<Guid>
 
     private async Task Validate(Guid input, CancellationToken cancellationToken)
     {
-        if (await _facade.PlayerExists(input, cancellationToken))
+        if (!await _facade.PlayerExists(input, cancellationToken))
         {
             throw new OperationErrorException(HttpStatusCode.NotFound, "Player Not Found.");
         }

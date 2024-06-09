@@ -23,7 +23,7 @@ public class GetPlayerBalanceOperation : OperationBase<Guid, decimal>
         ClaimsPrincipal principal,
         CancellationToken cancellationToken) =>
         (await _facade.GetPlayerBalance(input, cancellationToken))
-            .ThrowIfNull("Player's Wallet Not Found");
+            .ThrowIfNull("Player's Wallet Not Found.");
 
     public interface IGetPlayerBalanceDatabaseFacade : IRequiresContext
     {
