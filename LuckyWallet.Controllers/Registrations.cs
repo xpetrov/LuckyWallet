@@ -9,6 +9,7 @@ public static class Registrations
     {
         RegisterWalletOperation.Register(services);
         GetPlayerBalanceOperation.Register(services);
+        GetPlayerTransactionsOperation.Register(services);
 
         return services;
     }

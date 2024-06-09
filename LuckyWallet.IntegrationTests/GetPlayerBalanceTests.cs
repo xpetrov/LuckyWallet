@@ -20,7 +20,7 @@ public class GetPlayerBalanceTests
         var response = await client.GetAsync($"api/Player/{DbDefaults.Player1_Id}/Balance");
 
         // assert
-        response.EnsureSuccessStatusCode();
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         var responseString = await response.Content.ReadAsStringAsync();
         var balance = JsonConvert.DeserializeObject<decimal>(responseString);
@@ -38,7 +38,7 @@ public class GetPlayerBalanceTests
         var response = await client.GetAsync($"api/Player/{DbDefaults.Player3_Id}/Balance");
 
         // assert
-        response.EnsureSuccessStatusCode();
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         var responseString = await response.Content.ReadAsStringAsync();
         var balance = JsonConvert.DeserializeObject<decimal>(responseString);
@@ -46,7 +46,7 @@ public class GetPlayerBalanceTests
     }
 
     [TestMethod]
-    public async Task GetPlayerBalance_WhenPlayerHasNoWallet_Returns409()
+    public async Task GetPlayerBalance_WhenPlayerHasNoWallet_Returns404()
     {
         // arrange
         using var factory = new WebApplicationFactory<Startup>();
@@ -58,6 +58,6 @@ public class GetPlayerBalanceTests
         // assert
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         var responseString = await response.Content.ReadAsStringAsync();
-        Assert.AreEqual("Player's Wallet Not Found.", responseString);
+        Assert.AreEqual("Wallet Not Found.", responseString);
     }
 }
