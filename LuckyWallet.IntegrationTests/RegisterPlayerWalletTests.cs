@@ -14,7 +14,7 @@ public class RegisterPlayerWalletTests
         // arrange
         using var factory = new WebApplicationFactory<Startup>();
         var client = factory.CreateClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Player/{DbDefaults.Player4_Id}/RegisterWallet");
+        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Players/{DbDefaults.Player4_Id}/RegisterWallet");
 
         // act
         var response = await client.SendAsync(request);
@@ -29,7 +29,7 @@ public class RegisterPlayerWalletTests
         // arrange
         using var factory = new WebApplicationFactory<Startup>();
         var client = factory.CreateClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Player/{DbDefaults.PlayerUnknown_Id}/RegisterWallet");
+        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Players/{DbDefaults.PlayerUnknown_Id}/RegisterWallet");
 
         // act
         var response = await client.SendAsync(request);
@@ -44,7 +44,7 @@ public class RegisterPlayerWalletTests
         // arrange
         using var factory = new WebApplicationFactory<Startup>();
         var client = factory.CreateClient();
-        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Player/{DbDefaults.Player1_Id}/RegisterWallet");
+        var request = new HttpRequestMessage(HttpMethod.Post, $"api/Players/{DbDefaults.Player1_Id}/RegisterWallet");
 
         // act
         var response = await client.SendAsync(request);

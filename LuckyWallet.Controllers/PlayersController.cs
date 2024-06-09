@@ -8,7 +8,7 @@ namespace LuckyWallet.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class PlayerController : Controller
+public class PlayersController : Controller
 {
     [HttpPost("{playerId}/RegisterWallet", Name = nameof(RegisterWallet))]
     public async Task<ActionResult<None>> RegisterWallet(

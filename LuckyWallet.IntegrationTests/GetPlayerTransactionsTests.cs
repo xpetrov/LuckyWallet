@@ -18,7 +18,7 @@ public class GetPlayerTransactionsTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player1_Id}/Transactions");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player1_Id}/Transactions");
 
         // assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -35,7 +35,7 @@ public class GetPlayerTransactionsTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player3_Id}/Transactions");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player3_Id}/Transactions");
 
         // assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -52,7 +52,7 @@ public class GetPlayerTransactionsTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player4_Id}/Transactions");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player4_Id}/Transactions");
 
         // assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -69,7 +69,7 @@ public class GetPlayerTransactionsTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.PlayerUnknown_Id}/Transactions");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.PlayerUnknown_Id}/Transactions");
 
         // assert
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);

@@ -17,7 +17,7 @@ public class Startup
 
         services
             .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddWalletOperations();
+            .AddOperations();
 
         services.AddControllers();
     }
@@ -62,11 +62,42 @@ public class Startup
 
         var defaultTransactions = new List<Transaction>()
         {
-            new() { Id = DbDefaults.Wallet1_Transaction1_Id, UniqueTransactionId = Guid.NewGuid(), WalletId = DbDefaults.Wallet1_Id, Amount = 50, Type = TransactionType.Deposit },
-            new() { Id = DbDefaults.Wallet1_Transaction2_Id, UniqueTransactionId = Guid.NewGuid(), WalletId = DbDefaults.Wallet1_Id, Amount = 75, Type = TransactionType.Win },
-            new() { Id = DbDefaults.Wallet1_Transaction3_Id, UniqueTransactionId = Guid.NewGuid(), WalletId = DbDefaults.Wallet1_Id, Amount = 25, Type = TransactionType.Stake },
-
-            new() { Id = DbDefaults.Wallet2_Transaction1_Id, UniqueTransactionId = Guid.NewGuid(), WalletId = DbDefaults.Wallet2_Id, Amount = 50, Type = TransactionType.Deposit }
+            new()
+            {
+                Id = DbDefaults.Wallet1_Transaction1_Id,
+                UniqueTransactionId = DbDefaults.Wallet1_Transaction1_UniqueId,
+                WalletId = DbDefaults.Wallet1_Id,
+                Amount = 50,
+                Type = TransactionType.Deposit,
+                Result = TransactionResult.Accepted
+            },
+            new()
+            {
+                Id = DbDefaults.Wallet1_Transaction2_Id,
+                UniqueTransactionId = DbDefaults.Wallet1_Transaction2_UniqueId,
+                WalletId = DbDefaults.Wallet1_Id,
+                Amount = 75,
+                Type = TransactionType.Win,
+                Result = TransactionResult.Accepted
+            },
+            new()
+            {
+                Id = DbDefaults.Wallet1_Transaction3_Id,
+                UniqueTransactionId = DbDefaults.Wallet1_Transaction3_UniqueId,
+                WalletId = DbDefaults.Wallet1_Id,
+                Amount = 25,
+                Type = TransactionType.Stake,
+                Result = TransactionResult.Accepted
+            },
+            new()
+            {
+                Id = DbDefaults.Wallet2_Transaction1_Id,
+                UniqueTransactionId = DbDefaults.Wallet2_Transaction1_UniqueId,
+                WalletId = DbDefaults.Wallet2_Id,
+                Amount = 50,
+                Type = TransactionType.Deposit,
+                Result = TransactionResult.Accepted
+            }
         };
         dbContext.Transactions.AddRange(defaultTransactions);
         dbContext.SaveChanges();

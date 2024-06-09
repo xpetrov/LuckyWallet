@@ -15,6 +15,10 @@ public static class DbDefaults
     public static Guid Wallet1_Transaction1_Id = GuidGenerator.FromString("w1-transaction-1");
     public static Guid Wallet1_Transaction2_Id = GuidGenerator.FromString("w1-transaction-2");
     public static Guid Wallet1_Transaction3_Id = GuidGenerator.FromString("w1-transaction-3");
-
     public static Guid Wallet2_Transaction1_Id = GuidGenerator.FromString("w2-transaction-1");
+
+    public static Guid Wallet1_Transaction1_UniqueId = GuidGenerator.FromString("w1-t1-unique-id");
+    public static Guid Wallet1_Transaction2_UniqueId = GuidGenerator.FromString("w1-t2-unique-id");
+    public static Guid Wallet1_Transaction3_UniqueId = GuidGenerator.FromString("w1-t3-unique-id");
+    public static Guid Wallet2_Transaction1_UniqueId = GuidGenerator.FromString("w2-t1-unique-id");
 }

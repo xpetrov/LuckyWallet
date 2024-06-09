@@ -43,9 +43,6 @@ public class GetPlayerTransactionsOperation : OperationBase<Guid, Transaction[]>
         Task<bool> PlayerExists(Guid playerId, CancellationToken cancellationToken) =>
             DbContext.Set<Player>().AnyAsync(_ => _.Id == playerId, cancellationToken);
 
-        Task<bool> PlayerHasWallet(Guid playerId, CancellationToken cancellationToken) =>
-            DbContext.Set<Wallet>().AnyAsync(_ => _.PlayerId == playerId, cancellationToken);
-
         Task<Transaction[]> GetTransactions(Guid playerId, CancellationToken cancellationToken) =>
             DbContext.Set<Transaction>()
                 .AsNoTracking()

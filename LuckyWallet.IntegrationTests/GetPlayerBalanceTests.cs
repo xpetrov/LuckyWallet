@@ -17,7 +17,7 @@ public class GetPlayerBalanceTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player1_Id}/Balance");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player1_Id}/Balance");
 
         // assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -35,7 +35,7 @@ public class GetPlayerBalanceTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player3_Id}/Balance");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player3_Id}/Balance");
 
         // assert
         Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
@@ -53,7 +53,7 @@ public class GetPlayerBalanceTests
         var client = factory.CreateClient();
 
         // act
-        var response = await client.GetAsync($"api/Player/{DbDefaults.Player4_Id}/Balance");
+        var response = await client.GetAsync($"api/Players/{DbDefaults.Player4_Id}/Balance");
 
         // assert
         Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
