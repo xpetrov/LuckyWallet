@@ -3,6 +3,7 @@ using LuckyWallet.DataAccess;
 using LuckyWallet.DataModel;
 using LuckyWallet.DataModel.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace LuckyWallet.Host;
 
@@ -20,6 +21,8 @@ public class Startup
             .AddOperations();
 
         services.AddControllers();
+
+        services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "LuckyWallet API", Version = "v1" }));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,6 +32,12 @@ public class Startup
         dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();
         SeedData(dbContext);
+
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LuckyWallet API V1"));
+        }
 
         app.UseRouting();
 
