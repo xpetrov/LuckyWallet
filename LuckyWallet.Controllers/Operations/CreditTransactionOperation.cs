@@ -31,7 +31,11 @@ public class CreditTransactionOperation : OperationBase<CreditTransactionModel>
         ClaimsPrincipal principal,
         CancellationToken cancellationToken)
     {
-        //using var t = await _unitOfWork.BeginTransactionAsync(cancellationToken);
+        /*
+         * Transactions are not supported by the in-memory store. See https://go.microsoft.com/fwlink/?LinkId=800142
+         * So we need to comment out the next line since we are using in-memory database.
+         */
+        using var t = await _unitOfWork.BeginTransactionAsync(cancellationToken);
 
         var wallet = (await _facade.GetPlayerWallet(input.PlayerId, cancellationToken))
             .ThrowIfNull("No Wallet Found For a Player.");
@@ -63,14 +67,25 @@ public class CreditTransactionOperation : OperationBase<CreditTransactionModel>
                 : TransactionResult.Accepted
         };
 
-        wallet.Balance = input.Type == TransactionType.Stake
-            ? wallet.Balance - input.Amount
-            : wallet.Balance + input.Amount;
+
+        if (input.Type is TransactionType.Deposit or TransactionType.Win)
+        {
+            wallet.Balance += input.Amount;
+        }
+        else if (input.Type is TransactionType.Stake && wallet.Balance >= input.Amount)
+        {
+            wallet.Balance -= input.Amount;
+        }
 
         wallet.Transactions.Add(newTransaction);
 
         await _unitOfWork.SaveAsync(cancellationToken);
-        //await t.CommitAsync(cancellationToken);
+
+        /*
+         * Transactions are not supported by the in-memory store. See https://go.microsoft.com/fwlink/?LinkId=800142
+         * So we need to comment out the next line since we are using in-memory database.
+         */
+        await t.CommitAsync(cancellationToken);
 
         if (newTransaction.Result == TransactionResult.Rejected)
         {

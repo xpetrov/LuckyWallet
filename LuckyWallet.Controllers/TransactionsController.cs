@@ -7,7 +7,7 @@ namespace LuckyWallet.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TransactionController : Controller
+public class TransactionsController : Controller
 {
     [HttpPost(Name = nameof(CreditTransaction))]
     public async Task<ActionResult<None>> CreditTransaction(
